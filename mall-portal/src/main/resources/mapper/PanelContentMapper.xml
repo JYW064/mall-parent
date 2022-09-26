@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jyw.portal.mapper.PanelContentMapper" >
+  <resultMap id="BaseResultMap" type="com.jyw.portal.domain.PanelContent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="panel_id" property="panelId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="full_url" property="fullUrl" jdbcType="VARCHAR" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="pic_url2" property="picUrl2" jdbcType="VARCHAR" />
+    <result column="pic_url3" property="picUrl3" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, panel_id, type, product_id, sort_order, full_url, pic_url, pic_url2, pic_url3, 
+    gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from panel_content
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPanelId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from panel_content
+    where panel_id = #{panelId,jdbcType=BIGINT}
+    order by sort_order
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from panel_content
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jyw.portal.domain.PanelContent" >
+    insert into panel_content (id, panel_id, type, 
+      product_id, sort_order, full_url, 
+      pic_url, pic_url2, pic_url3, 
+      gmt_create, gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{panelId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{productId,jdbcType=BIGINT}, #{sortOrder,jdbcType=INTEGER}, #{fullUrl,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{picUrl2,jdbcType=VARCHAR}, #{picUrl3,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jyw.portal.domain.PanelContent" >
+    insert into panel_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="panelId != null" >
+        panel_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="fullUrl != null" >
+        full_url,
+      </if>
+      <if test="picUrl != null" >
+        pic_url,
+      </if>
+      <if test="picUrl2 != null" >
+        pic_url2,
+      </if>
+      <if test="picUrl3 != null" >
+        pic_url3,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="panelId != null" >
+        #{panelId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="fullUrl != null" >
+        #{fullUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl2 != null" >
+        #{picUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl3 != null" >
+        #{picUrl3,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jyw.portal.domain.PanelContent" >
+    update panel_content
+    <set >
+      <if test="panelId != null" >
+        panel_id = #{panelId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="fullUrl != null" >
+        full_url = #{fullUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null" >
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl2 != null" >
+        pic_url2 = #{picUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl3 != null" >
+        pic_url3 = #{picUrl3,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jyw.portal.domain.PanelContent" >
+    update panel_content
+    set panel_id = #{panelId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=BIGINT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      full_url = #{fullUrl,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      pic_url2 = #{picUrl2,jdbcType=VARCHAR},
+      pic_url3 = #{picUrl3,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

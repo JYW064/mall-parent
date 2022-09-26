@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jyw.portal.mapper.GoodMapper" >
+  <resultMap id="BaseResultMap" type="com.jyw.portal.domain.Good" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="sales" property="sales" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_updated" property="gmtUpdated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jyw.portal.domain.Good" extends="BaseResultMap" >
+    <result column="image_big" property="imageBig" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, info, price, num, sales, image, cid, status, version, gmt_create, gmt_updated
+  </sql>
+  <sql id="Blob_Column_List" >
+    image_big
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from good
+    where id = #{id,jdbcType=BIGINT}
+    and
+    status = 1
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = 1
+    <if test="priceMin != null and priceMin >= 0 and priceMax != null and priceMax >= 0">
+      AND price BETWEEN #{priceMin} AND #{priceMax}
+    </if>
+  </select>
+  <select id="selectAllOrderByPrice" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = 1
+    <if test="priceMin != null and priceMin >= 0 and priceMax != null and priceMax >= 0">
+      AND price BETWEEN #{priceMin} AND #{priceMax}
+    </if>
+    order by price
+  </select>
+  <select id="selectAllOrderByPriceDesc" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = 1
+    <if test="priceMin != null and priceMin >= 0 and priceMax != null and priceMax >= 0">
+      AND price BETWEEN #{priceMin} AND #{priceMax}
+    </if>
+    order by price desc
+  </select>
+  <select id="selectAllByCid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = 1
+    and cid = #{cid,jdbcType=BIGINT}
+    <if test="priceMin != null and priceMin >= 0 and priceMax != null and priceMax >= 0">
+      AND price BETWEEN #{priceMin} AND #{priceMax}
+    </if>
+  </select>
+  <select id="selectAllByCidOrderByPrice" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = 1
+    and cid = #{cid,jdbcType=BIGINT}
+    <if test="priceMin != null and priceMin >= 0 and priceMax != null and priceMax >= 0">
+      AND price BETWEEN #{priceMin} AND #{priceMax}
+    </if>
+    order by price
+  </select>
+  <select id="selectAllByCidOrderByPriceDesc" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = 1
+    and cid = #{cid,jdbcType=BIGINT}
+    <if test="priceMin != null and priceMin >= 0 and priceMax != null and priceMax >= 0">
+      AND price BETWEEN #{priceMin} AND #{priceMax}
+    </if>
+    order by price desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from good
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jyw.portal.domain.Good" >
+    insert into good (id, title, info, 
+      price, num, sales, 
+      image, cid, status, 
+      version, gmt_create, gmt_updated, 
+      image_big)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{num,jdbcType=INTEGER}, #{sales,jdbcType=INTEGER}, 
+      #{image,jdbcType=VARCHAR}, #{cid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{version,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtUpdated,jdbcType=TIMESTAMP}, 
+      #{imageBig,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jyw.portal.domain.Good" >
+    insert into good
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="sales != null" >
+        sales,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated,
+      </if>
+      <if test="imageBig != null" >
+        image_big,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="sales != null" >
+        #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imageBig != null" >
+        #{imageBig,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jyw.portal.domain.Good" >
+    update good
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="sales != null" >
+        sales = #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtUpdated != null" >
+        gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imageBig != null" >
+        image_big = #{imageBig,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jyw.portal.domain.Good" >
+    update good
+    set title = #{title,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      sales = #{sales,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP},
+      image_big = #{imageBig,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jyw.portal.domain.Good" >
+    update good
+    set title = #{title,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      num = #{num,jdbcType=INTEGER},
+      sales = #{sales,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_updated = #{gmtUpdated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateSalesByVersion">
+    update good
+    set num = #{num,jdbcType=INTEGER},
+     version = version + 1
+    where id = #{id,jdbcType=BIGINT}
+     and version = #{version,jdbcType=BIGINT}
+  </update>
+</mapper>
