@@ -47,9 +47,7 @@ public class GoodController {
                            @RequestParam(value = "currentPage",defaultValue = "1")int currentPage,
                            @RequestParam(value = "pageSize",defaultValue = "20")int  pageSize,
                            @RequestParam(value = "priceMax",defaultValue = "-1")int  priceMax,
-                           @RequestParam(value = "priceMin",defaultValue = "-1")int  priceMin,
-                           @RequestParam(value = "sort",defaultValue = "0")String  sort,
-                           @RequestParam(value = "quick",defaultValue = "0")int  quick) throws IOException {
+                           @RequestParam(value = "priceMin"ck) throws IOException {
         if(key==null||key.equals("")){
             return new ResultUtil<GoodDTO>().setData(goodService.getGoodDTO(currentPage,pageSize,sort,priceMax,priceMin,0));
         }
